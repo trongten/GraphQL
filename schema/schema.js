@@ -1,6 +1,6 @@
-const {gql} = require('apollo-server-express')
+const { gql } = require('apollo-server-express')
 
-const  typeDefs = gql`
+const typeDefs = gql`
     type User{
         id:ID
         name:String
@@ -27,7 +27,7 @@ const  typeDefs = gql`
 
 
     type Query{
-        user(name:String):User
+        user(id:ID!):User
         users:[User]
 
         message:Message
@@ -36,5 +36,15 @@ const  typeDefs = gql`
         chat:Chat
         chats:[Chat]
     }
+
+    type Mutation {
+        createUser(name:String,email:String,password:String) : User
+		createMessage(senderId: ID, context: String,chatId:ID): Message
+		createChat( chatName:String,
+        isGroupChat:Boolean,
+        users:[ID],
+        lastMessage: ID,
+        adminGroup:ID): Chat
+	}
 `
-module.exports= typeDefs
+module.exports = typeDefs

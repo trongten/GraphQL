@@ -3,15 +3,15 @@ const chatModel = mongoose.Schema(
     {
         chatName:{type:String, trim:true},
         isGroupChat:{type:Boolean, default:false},
-        users:[{
+        usersId:[{
             type: mongoose.Schema.Types.ObjectId,
             ref:"User"
         }],
-        lastMessage:{
+        lastMessageId:{
             type: mongoose.Schema.Types.ObjectId,
             ref:"Message"
         },
-        adminGroup:[{
+        adminGroupId:[{
             type: mongoose.Schema.Types.ObjectId ,
             ref:"User"         
         }],
