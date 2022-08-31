@@ -11,7 +11,7 @@ const resolver = {
 
         messages: async () => await messageModel.find(),
        
-        chat:  async ()=> await chatModel.find()
+        chats:  async ()=> await chatModel.find()
     }
     ,
     Message:{
@@ -20,9 +20,9 @@ const resolver = {
     }
     ,
     Chat:{
-        users: async (parent, args) => await userModel.findById(parent.senderId),
+        users: async ({usersId}, args) => await findAd(usersId),
         lastMessage: async (parent, args) => await messageModel.findById(parent.id),
-        adminGroup : async (parent, args) => await userModel.findById(parent.id)
+        adminGroup : async ({adminGroupId}, args) => await findAd(adminGroupId)
     },
 
 
@@ -38,9 +38,28 @@ const resolver = {
                 chatId:arg.chatId
                 
         }),
-		createChat :  async (parent, args)=>{}
+		createChat :  async (parent, args)=>await chatModel.create({
+            chatName:args.chatName,
+            isGroupChat:args.isGroupChat,
+            users:args.users,
+            lastMessage:args.lastMessage,
+            adminGroupId:args.adminGroupId
+        })
 	}
 
 }
+
+function findAd(parent) {
+  var a = new Array()
+  for ( i = 0; i < parent.length; i++){
+    a.push(userModel.findById(parent[i]))
+    }
+
+ 
+  return a;
+}
+
+
+
 
 module.exports = resolver

@@ -22,7 +22,7 @@ const typeDefs = gql`
         isGroupChat:Boolean
         users:[User]
         lastMessage: Message
-        adminGroup:User
+        adminGroup:[User]
     }
 
 
@@ -44,7 +44,7 @@ const typeDefs = gql`
         isGroupChat:Boolean,
         users:[ID],
         lastMessage: ID,
-        adminGroup:ID): Chat
+        adminGroupId:ID): Chat
 	}
 `
 module.exports = typeDefs
